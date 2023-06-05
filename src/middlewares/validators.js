@@ -10,6 +10,11 @@ const registerValidator = [
   body("password").isLength(6).isString(),
 ];
 
+const createProductValidator = [
+ 
+];
+
 module.exports = {
   registerValidator,
+  createProductValidator
 };
