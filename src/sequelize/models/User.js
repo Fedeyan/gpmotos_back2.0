@@ -58,8 +58,35 @@ const userData = (sequelize) => {
       type: DataTypes.ARRAY(DataTypes.JSON),
       allowNull: true,
     },
+    verifycode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    notifications: {
+      type: DataTypes.ARRAY(DataTypes.JSON),
+      defaultValue: [
+        JSON.stringify({
+          title: "Bienvenido",
+          preview: "Gracias por registrarte en GP Motos",
+          link: "null",
+        }),
+      ],
+    },
   });
-
+  UserDataModel.beforeUpdate(function (user, options) {
+    if (user.changed("verifycode")) {
+      bcrypt
+        .hash(user.verifycode.toString(), 10)
+        .then((hash) => {
+          user.verifycode = hash;
+        })
+        .catch((err) => console.log(err));
+    }
+  });
   return UserDataModel;
 };
 

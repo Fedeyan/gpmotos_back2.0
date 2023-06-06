@@ -68,7 +68,7 @@ app.use("/images", express.static(path.join(__dirname, "storage")));
 app.use(router);
 
 //start
-userDatabase.sync().then(function () {
+userDatabase.sync({ force: true }).then(function () {
   console.log("Base de datos de los usuarios inicializada correctamente...");
 });
 

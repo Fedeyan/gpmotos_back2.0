@@ -52,6 +52,7 @@ users.post("/register", registerValidator, async function (req, res) {
       });
     })
     .then(async function (Userdata) {
+    
       await newUser.setUserdata(Userdata);
       return res.json("El usuario " + username + " se ha creado con exito");
     })
@@ -86,6 +87,11 @@ users.post("/auth/logout", validateSession, function (req, res) {
     if (error) throw new Error(error);
   });
   return res.json("Has cerrado sesion");
+});
+
+users.get("/checksession", function (req, res) {
+  if (!req.isAuthenticated() || !req.user) return res.json(false);
+  return res.json(true);
 });
 
 module.exports = users;
