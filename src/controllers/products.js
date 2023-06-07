@@ -28,6 +28,7 @@ products.post(
   createProductValidator,
   upload.single("productImage"),
   async function (req, res) {
+    console.log(req.file ? req.file : null);
     const { code, name, brand, model, description, stock } = req.body;
     const result = validationResult(req);
     if (!result.isEmpty()) return res.json(result.array());
@@ -49,7 +50,7 @@ products.post(
       if (!product) {
         return res.json("Se ha producido un error, reintente.");
       } else {
-        global.io.emit("add_product")
+        global.io.emit("add_product");
         return res.json(
           "El producto " + code + " se ha agregado correctamente"
         );
