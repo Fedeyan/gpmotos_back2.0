@@ -70,11 +70,12 @@ app.use(router);
 //start
 userDatabase.sync({ force: true }).then(function () {
   console.log("Base de datos de los usuarios inicializada correctamente...");
-});
-
-productsDatabase.sync().then(function () {
-  console.log("Base de datos de los productos inicializada correctamente...");
-  app.listen(PORT, function () {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  productsDatabase.sync().then(function () {
+    console.log("Base de datos de los productos inicializada correctamente...");
+    app.listen(PORT, function () {
+      console.log(`Servidor operativo en el puerto ${PORT}`);
+    });
   });
 });
+
+

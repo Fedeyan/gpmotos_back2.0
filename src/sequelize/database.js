@@ -2,6 +2,7 @@ const { Sequelize } = require("sequelize");
 const { config } = require("dotenv");
 const { userModel, userData } = require("./models/User");
 const { productsModel } = require("./models/Products");
+const { whitelistModel } = require("./models/Whitelist");
 
 //start code
 config();
@@ -22,9 +23,10 @@ const productsDatabase = new Sequelize(PRODUCTS_DB, {
 //user
 userModel(userDatabase);
 userData(userDatabase);
+whitelistModel(userDatabase)
 //product
 productsModel(productsDatabase);
-const { Users, Userdatas } = userDatabase.models;
+const { Users, Userdatas, Whitelist } = userDatabase.models;
 const { Products } = productsDatabase.models;
 Userdatas.belongsTo(Users);
 Users.hasOne(Userdatas);
@@ -34,5 +36,6 @@ module.exports = {
   productsDatabase,
   Users,
   Userdatas,
+  Whitelist,
   Products,
 };

@@ -59,7 +59,7 @@ const userData = (sequelize) => {
       allowNull: true,
     },
     verifycode: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     verified: {
@@ -77,16 +77,7 @@ const userData = (sequelize) => {
       ],
     },
   });
-  UserDataModel.beforeUpdate(function (user, options) {
-    if (user.changed("verifycode")) {
-      bcrypt
-        .hash(user.verifycode.toString(), 10)
-        .then((hash) => {
-          user.verifycode = hash;
-        })
-        .catch((err) => console.log(err));
-    }
-  });
+
   return UserDataModel;
 };
 
