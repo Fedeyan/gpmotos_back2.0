@@ -9,10 +9,19 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 const path = require("path");
 const { Users } = require("./sequelize/database");
+const { SocketActionCreator } = require("./config/socket");
 
 config({ path: "../.env" });
 const app = express();
 const http = require("http").Server(app);
+const io = new Server(http, {
+  cors: {
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  },
+});
+
+global.io = io;
 
 //app_use
 app.use(express.urlencoded({ extended: true }));
@@ -60,16 +69,10 @@ app.use("/images", express.static(path.join(__dirname, "storage")));
 
 app.use(router);
 
-const io = new Server(http, {
-  cors: {
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-  },
+io.on("connect", function (socket) {
+    require("./config/socket.js")(socket, io)
 });
 
-io.on("connect", function (socket) {
-  console.log("test");
-});
 //start
 module.exports = {
   http,

@@ -49,6 +49,7 @@ products.post(
       if (!product) {
         return res.json("Se ha producido un error, reintente.");
       } else {
+        global.io.emit("add_product")
         return res.json(
           "El producto " + code + " se ha agregado correctamente"
         );
@@ -56,6 +57,7 @@ products.post(
     });
   }
 );
+
 products.get("/products", async function (req, res) {
   Products.findAll()
     .then((products) => {
