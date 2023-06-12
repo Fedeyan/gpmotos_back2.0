@@ -5,22 +5,26 @@ const verifier = require("express").Router();
 
 verifier.post("/mail", validateSession, async function (req, res) {
   const { verifycode } = req.body;
+  console.log(verifycode)
   const user = await Users.findOne({
     where: {
       id: req.user?.id || null,
     },
     include: Userdatas,
   });
-
   const userdata = await Userdatas.findOne({
     where: {
       UserId: user.id,
     },
   });
+  
+
 
   if (!user || !userdata) return res.json("Se ha producido un error");
 
-  if (userdata.verifycode === verifycode) {
+
+  if (userdata.verifycode === parseInt(verifycode)) {
+    
     userdata
       .update({
         verified: true,
