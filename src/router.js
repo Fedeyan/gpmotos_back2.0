@@ -5,6 +5,7 @@ const products = require("./controllers/products");
 const { transporter } = require("./middlewares/nodemailer");
 const { mailer } = require("./controllers/mailerController");
 const { verifier } = require("./controllers/verifyer");
+const shophandler = require("./controllers/shophandler");
 const router = Router();
 
 //serverStatus
@@ -21,7 +22,10 @@ router.use(products);
 //mail_service
 router.use("/mail_service", mailer);
 
-//verify_user 
-router.use("/verify_user",verifier)
+//verify_user
+router.use("/verify_user", verifier);
+
+//shophandler
+router.use("/shop", shophandler);
 
 module.exports = router;
